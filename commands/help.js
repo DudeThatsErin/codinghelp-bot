@@ -8,21 +8,34 @@ const helpEmbed1 = new Discord.MessageEmbed()
     .addFields(
         { name: 'Messages', value: '```css\nelaborate\njustask\nshare-code\nfaq\nrequests\npatience\nwrong-channel\nformat\nbin\nmods\nwiki\ndocs\nrules\nsuggestions```', inline: true },
 		{ name: 'Utilities', value: '```css\navatar\nhelp\ninvites\nchk-invites\nchannels\n```', inline: true },
-		{ name: 'Contests/Challenges', value: '```css\ncontest-leaderboard\naddpoints\naddchallenge\nsubmitchallenge\nsubmit\n```', inline: true },
+		/*{ name: 'Contests/Challenges', value: '```css\ncontest-leaderboard\naddpoints\naddchallenge\nsubmitchallenge\nsubmit\n```', inline: true },*/
 		{ name: 'Moderator Only Commands', value: '```css\nserver\npartners\nban\nunban\nmute\nunmute\nprune\nping\n```' },
     );
 
 	module.exports = {
-		name: 'help', // name the command something
-		description: 'Displays all information regarding commands', // Describe your command; shows this with the help command
-		aliases: ['h', 'halp', 'commands'], // Include if you have other names you want to use for this command as well.
-		usage: '++help or ++help [command name]', // Shows how the commmand is used.
-		inHelp: 'yes', // Necessary so that it displays the information in an Embed when using ++help [command]
+		name: 'help',
+		description: 'Displays all information regarding commands',
+		aliases: ['h', 'halp', 'commands'],
+		usage: '++help or ++help [command name]',
+		inHelp: 'yes',
 		execute(message, args) {
+
+		client.guilds.cache.forEach(guild => {
+			connection.query(
+				`SELECT cmdPrefix FROM GuildConfigurable WHERE guildId = '${guild.id}'`
+			).then(result => {
+				guildCommandPrefixes.set(guild.id, result[0][0].cmdPrefix);
+			}).catch(err => console.log(err));
+		});
+
 		if(args.length > 0) {
+
 			const cmd = message.client.commands.get(args[0]) || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(args[0]));
+
 			if(!cmd) return message.channel.send("That command could not be found!");
+
 			if(!cmd.inHelp) return message.channel.send("No help for that command could be found!");
+
 			else{
 				const emb = new Discord.MessageEmbed().setColor('#0099ff').setTitle(`Help for \`${cmd.name}\``);
 				if(cmd.description){
@@ -36,12 +49,15 @@ const helpEmbed1 = new Discord.MessageEmbed()
 				if(cmd.aliases){
 					emb.addField("Aliases", cmd.aliases.join(", "), false);
 				}
-				message.channel.send(emb);
+				message.author.send(emb);
 			}
 		}else{
-			message.channel.send(helpEmbed1);
+			message.author.send(helpEmbed1);
 		}
-		message.channel.bulkDelete(1);
+		if(message.channel.type !== "dm") {
+			message.channel.send('📨 Please check your DMs! I sent you a message with our help command!')
+		} else {
+		}
 		},
 		
 	};

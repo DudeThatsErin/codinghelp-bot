@@ -6,9 +6,23 @@ module.exports = {
     inHelp: 'yes',
     description: 'Marks a specific suggestion as in progress with the current status. **Note:** This can only be ran by moderators.',
     usage: '++progresssugg messageID [status message]',
-    execute(message, args, guild, client) {
+    async execute(message, args) {
 
-
+        try {
+            (await connection).query(
+                `SELECT noSugg, Author, Message from Suggs;`
+            );
+        } catch(err) {
+            console.log(err);
+        }
+        let progStat = 'In progress. This suggestion is currently being either worked on or deliberated by our Moderation team.';
+        try {
+            (await connection).query(
+                `UPDATE Suggs Set STATUS = '${progStat}' WHERE STATUS = noSugg'`
+            );
+        } catch(err) {
+            console.log(err);
+        }
         const inprogress = new Discord.MessageEmbed()
         .setColor('004d4d')
         .setAuthor(message.author.tag, message.author.displayAvatarURL({dynamic: true}))
@@ -25,4 +39,4 @@ module.exports = {
         }
 
     }
-});
+};

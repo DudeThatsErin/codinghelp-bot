@@ -9,4 +9,4 @@ module.exports = {
     execute(message, args, guild, client) {
 
     }
-});
+};
