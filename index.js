@@ -14,8 +14,12 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-client.on('ready', () => {
+client.on('ready', (guild) => {
   console.log(`${client.user.tag} is logged in and ready!`);
+  const list = client.guilds.cache.get('359760149683896320');
+  list.members.cache.forEach(m => {
+      console.log(m.user.username);
+  });
 
   client.user.setPresence({
     status: "dnd", 
@@ -26,12 +30,29 @@ client.on('ready', () => {
   });
 });
 
+client.on('guildCreate', async (guild) => {
+	try {
+    const list = client.guilds.cache.get('718253204147798047'); 
+    list.members.cache.forEach(member => {
+      console.log(member.username);
+   });
+		/*await connection.query(
+			`INSERT INTO Points (guildId, user) VALUES ('${guild.id}', '${users}')`
+		);
+    await connection.query(
+			`INSERT INTO Challenges (guildId) VALUES ('${guild.id}')`
+		);*/
+	} catch(err) {
+		console.log(err);
+	}
+});
+
 client.on('error', function (err) {
   console.log('Global error handler called:\n');
   if(err) {console.log(err);}
 });
 
-client.on('message', message => { // Looking for a message
+client.on('message', async message => { // Looking for a message
 
   /* ----------------------------------------------------------
   NECESSARY PARTS OF THE FILE
@@ -40,12 +61,10 @@ client.on('message', message => { // Looking for a message
   
   const args = message.content.slice(config.client.prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-  
   const command = client.commands.get(commandName)
     || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-  
-  if (!command) return;
-  
+  if (!command) return; 
+
   try {
     command.execute(message, args);
   } catch (error) {

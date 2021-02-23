@@ -4,6 +4,7 @@ module.exports = {
     aliases: ['diffch', 'different-channel'],
     usage: '++wrong-channel @username or user ID',
     inHelp: 'yes',
+    category: 'Messages',
     execute(message, args) {
   
       const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);

@@ -7,17 +7,20 @@ module.exports = {
     inHelp: 'yes',
     description: 'Creates a suggestion!',
     usage: '++suggestions [suggestion here]',
+    category: 'Messages',
     async execute(message, args){
 
     const channel = message.guild.channels.cache.find(c => c.name === 'suggestions');
     if(!channel) return message.channel.send('suggestions channel does not exist!');
 
     let messageArgs = args.join(' ');
-    let newStatus = 'Needs votes!';
+    let newStatus = 'New Suggestion';
+    let author = message.author.tag;
+    let avatar = message.author.displayAvatarURL({ dynamic: true});
 
     const initial = new Discord.MessageEmbed()
     .setColor('FADF2E')
-    .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+    .setAuthor(`${author}`, `${avatar}`)
     .setDescription(messageArgs)
     .setFooter('📈 This suggestion currently needs votes and feedback. If you would like to discuss it, please visit <#799835436783763467> and discuss it there.');
 
@@ -29,8 +32,8 @@ module.exports = {
 
     try {
         (await connection).query(
-            `INSERT INTO Suggs (noSugg, Author, Message, LAST_EDITED, STATUS) VALUES(?, ?, ?, CURRENT_TIMESTAMP(), ?)`,
-            [suggNo, message.author.tag, messageArgs, newStatus]
+            `INSERT INTO Suggs (noSugg, Author, Avatar, Message, LAST_EDITED, STATUS) VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP(), ?)`,
+            [suggNo, author, avatar, messageArgs, newStatus]
         );
 
     } catch(err) {
