@@ -1,7 +1,7 @@
 {
-  "name": "applewatch",
+  "name": "codinghelp-bot",
   "version": "1.0.0",
-  "description": "AppleWatch Discord Server's Bot",
+  "description": "CodingHelp Discord Server's Bot",
   "main": "index.js",
   "dependencies": {
     "better-sqlite3": "^7.1.2",
