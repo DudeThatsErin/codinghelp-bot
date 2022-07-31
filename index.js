@@ -1,21 +1,17 @@
-/* 
-  CODINGHELP BOT
-  USING DISCORD.JS V13.1.0
+/*
+  r/CodingHelp
+  USING DISCORD.JS V14.0.1
 */
 const fs = require('fs');
-const Discord = require('discord.js');
-const client = new Discord.Client({
-  intents: [
-    Discord.Intents.FLAGS.GUILDS,
-    Discord.Intents.FLAGS.GUILD_MESSAGES
-  ],
-});
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages ], partials: [Partials.Channel] });
+
 
 // configurations
 const config = require('./config/config.json');
-client.commands = new Discord.Collection();
-client.slashCommands = new Discord.Collection();
-client.cooldowns = new Discord.Collection();
+client.commands = new Collection();
+client.slashCommands = new Collection();
+client.cooldowns = new Collection();
 const { cooldowns } = client;
 let connection;
 

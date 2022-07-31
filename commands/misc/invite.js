@@ -1,12 +1,12 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'invite',
     description: 'Provides a link to users to allow them to invite other users to the server.',
     aliases: ['join', 'linky', 'invitation'],
-    usage: '++invite',
-    example: '++invite or ++join',
-    inHelp: 'yes',
+    usage: `${config.prefix}invite`,
+    example: `${config.prefix}invite or ${config.prefix}join`,
     execute(message) {
       const row = new MessageActionRow()
         .addComponents(

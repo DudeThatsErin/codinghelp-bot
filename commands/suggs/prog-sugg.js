@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'prog-sugg',
-    aliases: ['inprogsugg', 'workingsugg', 'workingsuggestion', 'inprogresssuggestion', 'inprogresssuggestions', 'workingsuggestion', 'worksugg', 'ps', 'ws'],
-    inHelp: 'yes',
+    aliases: ['inprogsugg', 'workingsugg', 'workingsuggestion', 'inprogresssuggestion', 'inprogresssuggestions', 'workingsuggestions', 'worksugg', 'ps', 'ws'],
     description: 'Allows **mods** to mark a particular suggestion as *in progress*.',
-    usage: '++prog-sugg messageID [status message]',
-    example: '++prog-sugg 847580954306543616 This is the in-progress status for this suggestion.',
-    modOnly: 'yes',
+    usage: `${config.prefix}prog-sugg messageID [status message]`,
+    example: `${config.prefix}prog-sugg 847580954306543616 This is the in-progress status for this suggestion.`,
+    modOnly: 1,
     async execute(message, args) {
 
             const msgId = args[0];
@@ -30,24 +30,24 @@ module.exports = {
             );
             const OGauthor = result2[0][0].Author;
             let name = (await message.client.users.cache.get(`${OGauthor}`)).tag;
-    
+
             const result3 = await connection.query(
                 `SELECT Message from Suggs WHERE noSugg = ?;`,
                 [msgId],
             );
             const suggestion = result3[0][0].Message;
-    
+
             const result4 = await connection.query(
                 `SELECT Avatar from Suggs WHERE noSugg = ?;`,
                 [msgId],
             );
             const avatar = result4[0][0].Avatar;
-    
+
             const mod = message.author.id;
-    
+
             const stats = args.slice(1).join(' ');
             if(!stats) return message.channel.send({text: 'You need to include the status of the suggestion as well as the message ID.'});
-    
+
             try {
                 connection.query(
                     `UPDATE Suggs SET stat = ?, Moderator = ? WHERE noSugg = ?;`,
@@ -63,31 +63,31 @@ module.exports = {
                 [msgId]
             );
             const upStatus = result8[0][0].stat;
-    
+
             const moderator = await connection.query(
                 `SELECT Moderator FROM Suggs WHERE noSugg = ?;`,
                 [msgId]
             );
             const moder = moderator[0][0].Moderator;
             const moderate = moder.tag || message.author.tag;
-    
+
             const inprogress = new Discord.MessageEmbed()
-                .setColor('004d4d')
+                .setColor(0x004d4d)
                 .setAuthor({name: name, iconURL: avatar})
                 .setDescription(suggestion)
                 .addFields(
-                    { name: 'Current Status', value: upStatus},
-                    { name: 'The moderator that last updated this was', value: moderate},
+                    [{ name: 'Current Status', value: upStatus},
+                    { name: 'The moderator that last updated this was', value: moderate},]
                 )
-                .setFooter({text: 'If you would like to suggest something, use ++suggestions'});
-                
+                .setFooter({text: `If you would like to suggest something, use ${config.prefix}suggestions`});
+
             const updated = new Discord.MessageEmbed()
-                .setColor('3EA493')
+                .setColor(0x3EA493)
                 .setAuthor({name: name, iconURL: avatar})
                 .setDescription(suggestion)
                 .addFields(
-                    { name: 'Your suggestion has been updated! This is the current status:', value: upStatus},
-                    { name: 'Moderator that updated your suggestion:', value: moder},
+                    [{ name: 'Your suggestion has been updated! This is the current status:', value: upStatus},
+                    { name: 'Moderator that updated your suggestion:', value: moder},]
                 )
                 .setTimestamp()
                 .setFooter({text: 'If you don\'t understand this status, please contact the moderator that updated your suggestion. Thank you!'});

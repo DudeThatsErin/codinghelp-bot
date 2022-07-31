@@ -1,14 +1,15 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'edit-submission',
     description: 'This gives users the ability to edit the submission answers that they previously submitted. If you need your message ID, contact one of the Challenge Moderators and they can get that for you.',
-    aliases: ['editsub', 'edit-sub', 'es', 'mc', 'modify-submission', 'modify-sub', 'modifysub', 'edits'],
-    usage: '++edit-submission [message ID] [new answer]',
-    example: '++edit-submission 841302144727646269 I like pudding!',
+    aliases: ['editsub', 'edit-sub', 'es', 'mc', 'modify-submission', 'modify-sub', 'modifysub', 'edits', 'editsubmission'],
+    usage: `${config.prefix}edit-submission [message ID] [new answer]`,
+    example: `${config.prefix}edit-submission 841302144727646269 I like pudding!`,
     note: 'You are allowed to upload files. Just leave the `[new answer]` field blank and just upload',
-    inHelp: 'yes',
+    partsOnly: 1,
     async execute(message, args) {
 
         let msgId = args[0];
@@ -49,13 +50,13 @@ module.exports = {
                     const newAnswer = title || url;
                     let au = message.author.id;
 
-                    let embed = new Discord.MessageEmbed()
-                        .setColor('#c9a066')
+                    let embed = new Discord.EmbedBuilder()
+                        .setColor(0xc9a066)
                         .setTitle(`I have updated your submission, Thanks ${author}!`)
                         .setDescription(`I have updated your submission to:\n${newAnswer}\n\nYour new message ID is:\n\`${msg}\``)
-                        .setFooter('If there is a problem with this, please report it!');
+                        .setFooter({text:'If there is a problem with this, please report it!'});
 
-                    message.client.users.cache.get(`${au}`).send({ embeds: [embed] });
+                    message.client.users.cache.get(au).send({ embeds: [embed] });
                     message.delete();
                 });
             }

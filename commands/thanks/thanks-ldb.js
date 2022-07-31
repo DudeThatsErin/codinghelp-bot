@@ -1,15 +1,14 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
-
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'thanks-leaderboard',
     description: 'This gives users the ability to see the top 10 users on the leaderboard and also their position on the leaderboard.',
     aliases: ['tks-ldbd', 'thx-leaderboard', 'tleaderboard', 'thanksleaderboard', 'txlbd', 'txldb', 'thnxldb', 'thxldb'],
-    usage: '++thanks-leaderboard',
-    example: '++thanks-leaderboard or ++thxldb or ++txlbd',
+    usage: `${config.prefix}thanks-leaderboard`,
+    example: `${config.prefix}thanks-leaderboard or h!thxldb or h!txlbd`,
     cooldown: 5,
-    inHelp: 'yes',
     async execute (message, args) {
         let guild = message.guild.id;
         let author = message.author.id;
@@ -38,20 +37,20 @@ module.exports = {
             points += `${data[i].total}\n`;
 
         }
-        
-        
+
+
         if(top10 === undefined || top10[0] === undefined || top10[0][0] === undefined) {
             message.channel.send('No one is on the leaderboard yet.');
         } else if(results === undefined || results[0] === undefined || results[0][0] === undefined) {
 
-        
-            let embed2 = new Discord.MessageEmbed()
+
+            let embed2 = new Discord.EmbedBuilder()
             .setTitle('This is the current thanks leaderboard.')
-            .setColor('#AD66A0')
+            .setColor(0xAD66A0)
             .addFields(
-                {name: `Top 10`, value: userNames, inline: true},
+                [{name: `Top 10`, value: userNames, inline: true},
                 {name: 'Thanks', value: points, inline: true},
-                {name: 'How many thanks do you have?', value: `${aUsername}, you currently have \`0\` thank(s).`}
+                {name: 'How many thanks do you have?', value: `${aUsername}, you currently have \`0\` thank(s).`}]
             )
             .setFooter({text:'If there is an error here, please report this!'});
 
@@ -63,13 +62,13 @@ module.exports = {
                 [author]
             );
             const p = ponts[0][0].total;
-            let embed2 = new Discord.MessageEmbed()
+            let embed2 = new Discord.EmbedBuilder()
                 .setTitle('This is the current thanks leaderboard.')
-                .setColor('#c9ca66')
+                .setColor(0xc9ca66)
                 .addFields(
-                    {name: `Top 10`, value: userNames, inline: true},
+                    [{name: `Top 10`, value: userNames, inline: true},
                     {name: 'Thanks', value: points, inline: true},
-                    {name: 'How many thanks do you have?', value: `${aUsername}, you currently have \`${p}\` thank(s).`}
+                    {name: 'How many thanks do you have?', value: `${aUsername}, you currently have \`${p}\` thank(s).`}]
                 )
                 .setFooter({text:'If there is an error here, please report this!'});
 

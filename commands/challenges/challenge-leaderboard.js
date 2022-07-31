@@ -1,15 +1,14 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'leaderboard',
     description: 'This gives users the ability to see the top 10 users on the leaderboard and also their position on the leaderboard.',
     aliases: ['ldbd', 'challenge-leaderboard', 'cleaderboard', 'cldbd', 'lbd', 'ldb'],
-    usage: '++leaderboard',
-    example: '++leaderboard or ++ldb or ++lbd',
-    inHelp: 'yes',
-    challengeMods: 'yes',
-    modOnly: 'yes',
+    usage: `${config.prefix}leaderboard`,
+    example: `${config.prefix}leaderboard or ${config.prefix}ldb or ${config.prefix}lbd`,
+    challengeMods: 1,
     async execute (message, args) {
         let guild = message.guild.id;
         let author = message.author.id;
@@ -37,21 +36,21 @@ module.exports = {
             userNames += `${i + 1}. ${username}\n`;
             points += `${data[i].total}\n`;
         }
-        
+
         if(top10 === undefined || top10[0] === undefined || top10[0][0] === undefined) {
             message.channel.send('No one is on the leaderboard yet.');
         } else if(results === undefined || results[0] === undefined || results[0][0] === undefined) {
 
-        
-            let embed2 = new Discord.MessageEmbed()
+
+            let embed2 = new Discord.EmbedBuilder()
             .setTitle('This is the current challenge leaderboard.')
-            .setColor('#c9ca66')
+            .setColor(0xc9ca66)
             .addFields(
                 {name: `Top 10`, value: userNames, inline: true},
                 {name: 'Points', value: points, inline: true},
                 {name: 'How many points do you have?', value: `${aUsername}, you currently have \`0\` point(s).`}
             )
-            .setFooter('If there is an error here, please report this!');
+            .setFooter({text:'If there is an error here, please report this!'});
 
             message.channel.send({ embeds: [embed2] });
 
@@ -61,15 +60,15 @@ module.exports = {
                 [guild, author]
             );
             const p = ponts[0][0].total;
-            let embed2 = new Discord.MessageEmbed()
+            let embed2 = new Discord.EmbedBuilder()
                 .setTitle('This is the current challenge leaderboard.')
-                .setColor('#c9ca66')
+                .setColor(0xc9ca66)
                 .addFields(
                     {name: `Top 10`, value: userNames, inline: true},
                     {name: 'Points', value: points, inline: true},
                     {name: 'How many points do you have?', value: `${aUsername}, you currently have \`${p}\` point(s).`}
                 )
-                .setFooter('If there is an error here, please report this!');
+                .setFooter({text:'If there is an error here, please report this!'});
 
             message.channel.send({ embeds: [embed2] });
                 }

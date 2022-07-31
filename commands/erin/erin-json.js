@@ -9,10 +9,12 @@ module.exports = {
     name: 'erin-json',
     aliases: ['me-json', 'dev-json', 'json', 'erinjson', 'mejson', 'devjson'],
     cooldown: 0,
-    ownerOnly: 'yes',
-    execute(message, args, client) {
+    ownerOnly: 1,
+    usage: `${config.prefix}erin-json`,
+    description: `Sends an embed that Erin uses to see what is stored in the json files so she doesn\'t have to open her file editor to see what is in them.`,
+    execute(message) {
 
-        const files = new Discord.MessageEmbed()
+        const files = new Discord.EmbedBuilder()
             .setColor(ee.rand_color)
             .setTitle('This is how all of the json files are set up...')
             .addFields(
@@ -41,7 +43,7 @@ module.exports = {
                 }
                 )
             .setTimestamp()
-            .setFooter({ text: 'These were last updated on 1-14-2022 @ 7:00pm EST.', iconURL: ee.footericon });
+            .setFooter({ text: 'These were last updated on 1-14-2022 @ 7:00pm EST.', icon_url: ee.footericon });
         message.channel.send({ embeds: [files] });
     }
 }

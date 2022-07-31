@@ -1,10 +1,11 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
   name: 'dm',
   description: 'Shoots an official embed to a user that is replied to or pinged.',
-  usage: '++dm <@username>',
-  example: '++dm @DudeThatsErin',
+  usage: `${config.prefix}dm <@username>`,
+  example: `${config.prefix}dm @DudeThatsErin`,
   modOnly: 1,
   execute(message, args) {
 
@@ -21,7 +22,7 @@ module.exports = {
     );
 
     if (message.reference === null) { // just a regular message
-      const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);
+      const user = message.mentions.users?.first() || message.guild.members.cache.get(args[0]);
       if (!user) {
         message.channel.send({ content: 'You need to specify a user via mention or the ID.' });
         message.delete();
@@ -31,7 +32,7 @@ module.exports = {
         const saying = args.slice(1).join(' ')
 
         const dm = {
-          color: '#1e1b49',
+          color: 0x1e1b49,
           title: `You received a DM from r/CodingHelp`,
           thumbnail: {
             url: 'https://imgur.com/U6cwQxj.png'
@@ -43,15 +44,14 @@ module.exports = {
             icon_url: 'https://imgur.com/U6cwQxj.png'
           }
         }
-        let usr = message.mentions.members.first();
-        usr.send({ content: `Hey, ${user.username}!`, embeds: [dm], components: [row] });
+        user.send({ content: `Hey, ${user.username}!`, embeds: [dm], components: [row] });
         message.react('👍');
       }
     } else {
-      const saying = args.slice(0).join(' ')
+      const saying = args.slice(0).join(' ');
 
       const dm = {
-        color: '#1e1b49',
+        color: 0x1e1b49,
         title: `You received a DM from r/CodingHelp`,
         thumbnail: {
           url: 'https://imgur.com/U6cwQxj.png'

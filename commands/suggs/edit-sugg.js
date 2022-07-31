@@ -1,14 +1,13 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
-
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'editsugg',
-    aliases: ['edits', 'es', 'editsuggestion', 'editsuggestions', 'editsuggs', 'us', 'updatesuggestion', 'updatesugg', 'updates', 'edit-suggestions', 'edit-suggestion', 'update-suggestion', 'update-suggestions'],
+    aliases: ['edits', 'es', 'editsuggestion', 'editsuggestions', 'editsuggs', 'us', 'updatesuggestion', 'updatesugg', 'updates', 'edit-suggestions', 'edit-suggestion', 'update-suggestion', 'update-suggestions', 'updatesuggestions'],
     description: 'Users can update their suggestion with this command.\n**Note:** Only the original poster\'s of the suggestion can edit the message. Meaning someone posts a suggestion and only that person can edit the suggestion, no one else.',
-    usage: '++editsugg messageID [updated message]',
-    inHelp: 'yes',
-    example: '++editsugg 847580954306543616 I need to update my suggestion!',
+    usage: `${config.prefix}editsugg messageID [updated message]`,
+    example: `${config.prefix}editsugg 847580954306543616 I need to update my suggestion!`,
     async execute(message, args) {
 
         const threadAuthor = message.member.displayName;
@@ -53,14 +52,14 @@ module.exports = {
             [msgId]
         );
         const upStatus = result8[0][0].Message;
-        
+
         const edited = new Discord.MessageEmbed()
-            .setColor('#1C3D77')
+            .setColor(0x1C3D77)
             .setAuthor({name: author, iconURL: avatar})
             .setDescription('Your suggestion has been updated!')
             .addFields(
-                { name: 'Your old suggestion:', value: suggestion},
-                { name: 'Your new suggestion:', value: upStatus },
+                [{ name: 'Your old suggestion:', value: suggestion},
+                { name: 'Your new suggestion:', value: upStatus },]
             )
             .setTimestamp()
             .setFooter({text: 'If you do\'t understand this reason, please contact the moderator that updated your suggestion. Thank you!'});
@@ -68,19 +67,14 @@ module.exports = {
             message.delete()
 
         const editedTwo = new Discord.MessageEmbed()
-            .setColor('#004d4d')
+            .setColor(0x004d4d)
             .setAuthor({name: author, iconURL: avatar})
             .setDescription(upStatus)
-            .setFooter({text:'If you are interested in submitting a suggestion please use: ++suggestion'});
+            .setFooter({text:'If you are interested in submitting a suggestion please use: h!suggestion'});
 
             const channel = message.guild.channels.cache.find(c => c.name === 'suggestions');
             channel.messages.fetch(mId).then(message => {
                 message.edit({ embeds: [editedTwo] });
-                message.startThread({
-                    name: `${threadAuthor}-${message.createdTimestamp}`,
-                    autoArchiveDuration: 60,
-                    type: 'GUILD_PUBLIC_THREAD'
-                });    
                 }
             )
 

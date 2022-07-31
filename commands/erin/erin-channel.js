@@ -1,14 +1,16 @@
 // at the top of your file
 const Discord = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'channel',
     description: 'Sends a channel list for the channel guide channel.',
-    ownerOnly: 'yes',
+    ownerOnly: 1,
+    usage: `${config.prefix}channel`,
     execute(message, client) {
 
-        const channels = new Discord.MessageEmbed()
-            .setColor('GREY')
+        const channels = new Discord.EmbedBuilder()
+            .setColor(0xDCE0DC)
             .setTitle('Do you need help navigating the server?')
             .setDescription('Just take a look at the different categories below and that should help you navigate the server. You can click the name of the channel if you find the one you are looking for.')
             .addFields(

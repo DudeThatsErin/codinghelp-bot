@@ -1,10 +1,11 @@
+const config = require('../../config/config.json');
+
 module.exports = {
   name: 'requests',
   description: 'Refers people to the request-coders channel to hire someone.',
   aliases: ['hire', 'request-coders', 'rc'],
-  usage: '++requests @username or user ID',
-  example: '++requests @DudeThatsErin',
-  inHelp: 'yes',
+  usage: `${config.prefix}requests @username or user ID`,
+  example: `${config.prefix}requests @DudeThatsErin`,
   execute(message, args) {
     if (message.reference === null) { // just a regular message
       const user = message.mentions.users.first() || message.guild.members.cache.get(args[0]);

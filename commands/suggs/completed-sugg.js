@@ -1,14 +1,14 @@
 const Discord = require('discord.js')
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'completedsugg',
     aliases: ['cs', 'dones', 'donesugg', 'completed-suggestion', 'completed-sugg', 'completedsugg', 'ok-sugg', 'ok-suggestion', 'completedsuggestion', 'completedsuggestions', 'acceptedsugg', 'acceptedsuggestions', 'acceptedsuggestion', 'oksugg', 'oks'],
-    inHelp: 'yes',
-    description: 'Marks a specific suggestion as completed. **Note:** This can only be ran by moderators.',
-    usage: '++completedsugg messageID [reason]',
-    example: '++completedsugg 847580954306543616 I have completed your suggestion!',
-    modOnly: 'yes',
+    description: 'Marks a specific suggestion as completed.',
+    usage: `${config.prefix}completedsugg messageID [reason]`,
+    example: `${config.prefix}completedsugg 847580954306543616 I have completed your suggestion!`,
+    modOnly: 1,
     async execute(message, args) {
 
             const msgId = args[0];
@@ -75,12 +75,12 @@ module.exports = {
 
             
                 const denied = new Discord.MessageEmbed()
-                    .setColor('#6E3EA4')
+                    .setColor(0x6E3EA4)
                     .setAuthor({name: aut, iconURL:avatar})
                     .setDescription(suggestion)
                     .addFields(
-                        { name: 'Your suggestion was completed! This is the decision:', value: upStatus},
-                        { name: 'Moderator that completed your suggestion:', value: moderate},
+                        [{ name: 'Your suggestion was completed! This is the decision:', value: upStatus},
+                        { name: 'Moderator that completed your suggestion:', value: moderate},]
                     )
                     .setTimestamp()
                     .setFooter({text: 'If you don\'t understand this decision, please contact the moderator that completed your suggestion. Thank you!'});

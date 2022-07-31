@@ -1,12 +1,13 @@
 const connection = require('../../database.js');
+const bot = require('../../config/bot.json');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'statusreport',
     description: 'You can check the status of a previous report you sent.',
     aliases: ['status-report', 'statr', 'reportcheck', 'check-report', 'checkreport'],
-    inHelp: 'yes',
-    usage: '++statusreport <messageID>',
-    example: '++statusreport 852197394828230716',
+    usage: `${config.prefix}statusreport <messageID>`,
+    example: `${config.prefix}statusreport 852197394828230716`,
     async execute(message, args, client) {
 
         let messageId = args[0];
@@ -29,7 +30,7 @@ module.exports = {
             const status = results[0][0]?.stat || 'I have not started working on it yet. I will get to it as soon as I can. Thank you!';
 
             const report = {
-                color: '#5241CE',
+                color: 0x5241CE,
                 title: 'This is the current status of your bug report...',
                 author: {
                     name: authorUsername,
@@ -38,20 +39,20 @@ module.exports = {
                 thumbnail: {
                     url: avatar
                 },
-                description: status + `n\n**This is your original report:**\n${original}\n\n**Did you upload a file?**\n${file}`,
+                description: status + `\n**This is your original report:**\n${original}\n\n**Did you upload a file?**\n${file}`,
                 fields: [
                     {
                         name: 'Original Message ID:',
                         value: `\`${messageId}\``
                     }, {
-                        name: 'Message Author ID:',
-                        value: `\`${OG}\``
+                        name: 'Use this to check the status of your report in the future:',
+                        value: `\`${config.prefix}statusreport ${messageId}\``
                     }
                 ],
                 timestamp: new Date(),
                 footer: {
                     text: 'If you don\'t understand this status, please ask Erin about it.',
-                    icon_url: `https://codinghelp.site/bots/codinghelp.png`
+                    icon_url: bot.avatar
                 }
             };
 

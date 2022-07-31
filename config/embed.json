@@ -1,13 +1,13 @@
 {
-    "good_color": "#00d100",
-    "bad_color": "#a80000",
-    "impmsg_color": "#52ffff",
-    "rand_color": "#00002e",
-    "sub_status": "#24ffff",
-    "server_status": "#00ad00",
-    "bot_status": "#800080",
-    "dm_color": "#d60000",
-    "format": "#ffb224",
+    "good_color": "0x00d100",
+    "bad_color": "0xa80000",
+    "impmsg_color": "0x52ffff",
+    "rand_color": "0x00002e",
+    "sub_status": "0x24ffff",
+    "server_status": "0x00ad00",
+    "bot_status": "0x800080",
+    "dm_color": "0xd60000",
+    "format": "0xffb224",
     "footertext": "Thanks for using CodingHelp!",
     "footericon": "https://codinghelp.site/bots/codinghelp.png"
 }

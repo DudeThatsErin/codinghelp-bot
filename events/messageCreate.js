@@ -1,7 +1,7 @@
 const config = require('../config/config.json');
-const { MessageActionRow, MessageButton } = require('discord.js');
 const me = require('../config/owner.json');
 const Discord = require('discord.js');
+const connection = require('../database.js')
 
 module.exports = {
     name: 'messageCreate',
@@ -31,7 +31,7 @@ module.exports = {
         //console.log(command);
 
         // owner only
-        if (command.ownerOnly === 'yes') {
+        if (command.ownerOnly === 1) {
             if (!message.author.id === me.id) {
                 return message.reply({ content: `This is only a command Erin (<@${me.id}>) can use. If you are seeing this in error use the \`${config.prefix}report\` command.` });
             }
@@ -83,6 +83,22 @@ module.exports = {
             }
         }
 
+        const partsResults = await connection.query(
+            `SELECT * FROM Challenges WHERE guildId = ?;`,
+            [message.guild.id]
+        );
+        if(command.partsOnly === 1) {
+            for(const ID of partsResults.player) {
+                if(message.member.id == ID) {
+                    value++
+                }
+                if(value == partsResults.player.length) {
+                    message.react('❌');
+                    message.reply({ content: `This is a command only challenge participants can use. You do not have the required role. Participants have the \`Participants\` role. If there is an issue, please report this to the Challenge Moderators.`})
+                }
+            }
+        }
+
         // command cooldowns
         if (!cooldowns.has(command.name)) {
             cooldowns.set(command.name, new Discord.Collection());
@@ -97,7 +113,7 @@ module.exports = {
 
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+                return message.reply({content: `Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`});
             }
         }
 
@@ -109,19 +125,19 @@ module.exports = {
             command.execute(message, args, client);
         } catch (error) {
             console.error(error);
-            const row = new MessageActionRow()
+            const row = new Discord.ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new Discord.ButtonBuilder()
                         .setLabel('Erin\'s Support Server')
-                        .setStyle('LINK')
+                        .setStyle('Link')
                         .setURL('https://discord.gg/tT3VEW8AYF'),
-                    new MessageButton()
+                    new Discord.ButtonBuilder()
                         .setLabel('Fill out this form!')
-                        .setStyle('LINK')
-                        .setURL('https://codinghelp.site')
+                        .setStyle('Link')
+                        .setURL('https://dudethatserin.com')
                 )
             const embed = {
-                color: '#AA2C2C',
+                color: 0xAA2C2C,
                 title: 'Oh no! An _error_ has appeared!',
                 description: `**Contact Bot Owner:** <@${me.id}>`,
                 fields: [
@@ -131,9 +147,6 @@ module.exports = {
                     }, {
                         name: '**Error Message:**',
                         value: `\`${error.message}\``
-                    }, {
-                        name: '**Error Location:**',
-                        value: `\`${error.stack}\``
                     }, {
                         name: '**Ways to Report:**',
                         value: `Run the \`${config.prefix}report\` command, Message Erin on Discord, or use one of the links below.\n\nPlease include all of the information in this embed (message) as well as any additional information you can think to provide. Screenshots are also VERY helpful. Thank you!`

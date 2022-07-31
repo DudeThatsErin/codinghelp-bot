@@ -17,7 +17,7 @@ module.exports = {
 
         client.user.setPresence({ activities: [{ name: 'Use ++ prefix' }] });
 
-        /*const rest = new REST({ version: '9' }).setToken(config.token);
+        const rest = new REST({ version: '9' }).setToken(config.token);
 
         (async () => {
             try {
@@ -32,7 +32,7 @@ module.exports = {
             } catch (error) {
                 console.error(error);
             }
-        })();*/
+        })();
 
     }
 }

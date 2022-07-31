@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'denied-sugg',
     aliases: ['deniedsugg', 'denys', 'nosugg', 'deniedsuggestion', 'deniedsuggestions', 'denysugg'],
-    inHelp: 'yes',
     description: 'Allows **mods** to deny a particular suggestion.',
-    usage: '++deniedsugg messageID [reason]',
-    example: '++deniedsugg 847580954306543616 I don\'t want to do what you suggested! GO AWAY!',
-    modOnly: 'yes',
+    usage: `${config.prefix}deniedsugg messageID [reason]`,
+    example: `${config.prefix}deniedsugg 847580954306543616 I don\'t want to do what you suggested! GO AWAY!`,
+    modOnly: 1,
     async execute(message, args) {
 
         const msgId = args[0];
@@ -67,12 +67,12 @@ module.exports = {
         const moderate = moder.tag || message.author.tag;
         
         const denied = new Discord.MessageEmbed()
-            .setColor('#A4503E')
+            .setColor(0xA4503E)
             .setAuthor({ name: aut, iconURL: avatar})
             .setDescription(suggestion)
             .addFields(
-                { name: 'Unfortunately, your suggestion was denied. This is the reason:', value: upStatus},
-                { name: 'Moderator that denied your suggestion:', value: moderate},
+                [{ name: 'Unfortunately, your suggestion was denied. This is the reason:', value: upStatus},
+                { name: 'Moderator that denied your suggestion:', value: moderate},]
             )
             .setTimestamp()
             .setFooter({text: 'If you don\'t understand this reason, please contact the moderator that updated your suggestion. Thank you!'});

@@ -1,15 +1,18 @@
 const Discord = require('discord.js');
 const ee = require('../../config/embed.json');
 const bot = require('../../config/bot.json');
+const config = require('../../config/config.json');
 
 module.exports = {
   name: 'resources',
   aliases: ['resource', 'useful-links', 'usefullinks'],
-  ownerOnly: 'yes',
+  modOnly: 1,
+  description: `Sends an embed with all our useful resources and a link to our website to see more useful resources.`,
+  usage: `${config.prefix}resources`,
   execute(message) {
 
-    const docs = new Discord.MessageEmbed()
-      .setColor('#60A368')
+    const docs = new Discord.EmbedBuilder()
+      .setColor(0x60A368)
       .setTitle('Useful Resources/Links')
       .setDescription('This is an excerpt from our Useful Links listed on our Forum. The link to that is below. Use the \`++suggest\` command if you would like to add any additional resources.')
       .addFields(
@@ -39,7 +42,7 @@ module.exports = {
           inline: false
         }
       )
-      .setFooter({ text: 'This was last updated on 1-14-2022 @ 7:00pm', iconURL: ee.footericon });
+      .setFooter({ text: 'This was last updated on 1-14-2022 @ 7:00pm', icon_url: ee.footericon });
 
       message.channel.send({ embeds: [docs], components: [
         {
@@ -49,7 +52,7 @@ module.exports = {
               type: 2,
               style: 5,
               label: 'View more useful links',
-              url: `https://codinghelp.site/useful-links/`
+              url: `https://codinghelp.site/`
             }
           ]
         }

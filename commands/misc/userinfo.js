@@ -1,12 +1,12 @@
 const moment = require('moment');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'userinfo',
     description: 'This allows users to find out more information about themselves or another user they ping or provide the ID for.',
     aliases: ['user', 'person', 'useri', 'user-info'],
-    usage: '++userinfo',
-    inHelp:'yes',
-    example: '++userinfo',
+    usage: `${config.prefix}userinfo`,
+    example: `${config.prefix}userinfo`,
     execute (message) {
 
       if (message.reference === null) { // just a regular message
@@ -63,7 +63,7 @@ module.exports = {
               name: 'Joined server on',
               value: `\`${moment(message.guild.members.cache.get(member.id).joinedAt).format('MMM DD YYYY')}\``,
               inline: true,
-            }, 
+            },
             {
               name: 'Joined Discord on',
               value: `\`${moment(member.createdAt).format('MMM DD YYYY')}\``,
@@ -96,7 +96,7 @@ module.exports = {
           userinfo.avatar = member.displayAvatarURL({ dynamic: true });
           const memberMention = message.mentions.members.first() || message.member;
           const rolesOfTheMember = memberMention.roles.cache.filter(r => r.name !== '@everyone').map(role => role.name).join(', ')
-  
+
           var myInfo = {
             color: '#7DCE87',
             author: {
@@ -137,7 +137,7 @@ module.exports = {
                 name: 'Joined server on',
                 value: `\`${moment(message.guild.members.cache.get(member.id).joinedAt).format('MMM DD YYYY')}\``,
                 inline: true,
-              }, 
+              },
               {
                 name: 'Joined Discord on',
                 value: `\`${moment(member.createdAt).format('MMM DD YYYY')}\``,
@@ -158,8 +158,8 @@ module.exports = {
 
           message.channel.send({ embeds: [myInfo] });
         }
-        
-        
+
+
     }
 
 };

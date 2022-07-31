@@ -1,12 +1,12 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'reddit',
     description: 'Provides a link to our Subreddit.',
     aliases: ['subreddit', 'other'],
-    usage: '++reddit',
-    example: '++reddit or ++subreddit',
-    inHelp: 'yes',
+    usage: `${config.prefix}reddit`,
+    example: `${config.prefix}reddit or ${config.prefix}subreddit`,
     execute(message) {
       const row = new MessageActionRow()
         .addComponents(

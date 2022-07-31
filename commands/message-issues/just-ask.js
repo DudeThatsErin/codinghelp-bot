@@ -1,11 +1,12 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
   name: 'justask',
   description: 'Tells users to just ask their question instead of asking if someone is here or if someone can help them.',
   aliases: ['ja', 'ask', 'just-ask'],
-  usage: '++justask @username or userID',
-  inHelp: 'yes',
+  usage: `${config.prefix}justask @username or userID`,
+  example: `${config.prefix}justask @DudeThatsErin#8736`,
   execute(message, args) {
     const row = new MessageActionRow()
       .addComponents(

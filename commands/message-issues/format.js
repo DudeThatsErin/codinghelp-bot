@@ -1,12 +1,11 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
-
+const config = require('../../config/config.json');
 module.exports = {
   name: 'format',
   description: 'Asks people to format their code with backticks or by sharing their code on places like pastebin.com',
   aliases: ['highlight'],
-  usage: '++format @username or user ID',
-  example: '++format @DudeThatsErin',
-  inHelp: 'yes',
+  usage: `${config.prefix}format @username or user ID`,
+  example: `${config.prefix}format @DudeThatsErin`,
   execute(message, args) {
     const row = new MessageActionRow()
       .addComponents(
@@ -33,7 +32,7 @@ module.exports = {
       else {
         let usr = message.mentions.members.first();
         const formatEmbed = {
-          color: '#7DBFBF',
+          color: 0x7DBFBF,
           title: 'Did you format your code?',
           url: 'https://codinghelp.site',
           thumbnail: {
@@ -58,7 +57,7 @@ module.exports = {
     } else {
       let usr = message.mentions.repliedUser;
       const formatEmbed = {
-        color: '#7DBFBF',
+        color: 0x7DBFBF,
         title: 'Did you format your code?',
         url: 'https://codinghelp.site',
         thumbnail: {

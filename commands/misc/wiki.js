@@ -1,12 +1,12 @@
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'wiki',
     description: 'Provides a link to our Website.',
     aliases: ['kb', 'knowledgebase', 'site', 'website'],
-    usage: '++wiki',
-    example: '++wiki or ++kb',
-    inHelp: 'yes',
+    usage: `${config.prefix}wiki`,
+    example: `${config.prefix}wiki or ${config.prefix}kb`,
     execute(message) {
       const row = new MessageActionRow()
         .addComponents(

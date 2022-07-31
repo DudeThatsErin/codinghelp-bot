@@ -1,16 +1,17 @@
 const Discord = require('discord.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'welcome',
     description: 'Displays information about our server.',
-    usage: '++welcome',
-    ownerOnly: 1,
+    usage: `${config.prefix}welcome`,
+    modOnly: 1,
     execute(message, args) {
 
-        const welcomeEmbed = new Discord.MessageEmbed()
-            .setColor('#000000')
-            .setTitle('Welcome to coding.help[ ]\'s Discord Server!')
-            .setDescription('We are a Discord Server dedicated to helping people learn how to code. We have over 1.9k members and can\'t wait to welcome more! Come join the community of people that are looking to share their knowledge with new programmers!\n\nYou can also find us on [Reddit](https://reddit.com/r/CodingHelp) with over 43.2k members or on our new [Forum](https://codinghelp.site)!')
+        const welcomeEmbed = new Discord.EmbedBuilder()
+            .setColor(0x000000)
+            .setTitle('Welcome to r/CodingHelp\'s Discord Server!')
+            .setDescription('We are a Discord Server dedicated to helping people learn how to code. We have over 2.5k members and can\'t wait to welcome more! Come join the community of people that are looking to share their knowledge with new programmers!\n\nYou can also find us on [Reddit](https://reddit.com/r/CodingHelp) with over 54k members or on our new [Knowledgebase](https://codinghelp.site)!')
             .setImage('https://images-ext-1.discordapp.net/external/r__1ELtLocROQQFz8W5GmWQzOA5wlP4Tag7XTbGqQpY/https/media.discordapp.net/attachments/586293598996135953/757414290058903712/FxSHhhK.png')
             .addFields(
                 { name: 'Current Staff', value: 'Owner: <@455926927371534346>\nDiscord Mods: <@541305895544422430>, <@732667572448657539> & <@198147661449134080>\nSubreddit Mods: <@444524618401841152>, <@332652477528801280>, & <@136611109007261696>' },

@@ -1,111 +1,63 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'suggestions',
     aliases: ['suggest', 'suggestion', 'sugg', 's'],
     description: 'Creates a suggestion!',
-    usage: '++suggestions [suggestion here]',
-    example: '++suggestions I want pudding!',
-    inHelp: 'yes',
+    usage: `${config.prefix}suggestions [suggestion here]`,
+    example: `${config.prefix}suggestions I want pudding!`,
     async execute(message, args){
-        const threadAuthor = message.member.displayName;
+    const threadAuthor = message.member.displayName;
 
-    const channel = message.guild.channels.cache.find(c => c.name === 'suggestions');
-    if(!channel) {
-        message.guild.channels.create('suggestions', {
-            type: 'text',
-            reason: 'CodingHelp Bot needed a suggestions channel for the suggestions handler.'
-        }).then((channel) => {
-            message.channel.send({text:'The suggestions channel did not exist so I created one!'})
-        }).catch(console.error);
+    const channel = message.guild.channels.cache.find(c => c.id === `1000437492467650650`); //actual ch: 1000437492467650650 // test ch: 1000420829307338862
+    //console.log(channel)
+
 
         let messageArgs = '';
         if (args.length > 0) {
             messageArgs = args.join(' ');
         } else {
             message.react('❓');
-            message.reply({text:'You need to specify a suggestion to use this command. How will we know what you want to suggest unless you tell us?! If you would like to check the status of your suggestion then you can use \`++statussug [your status message ID]\`.'});
+            message.reply({text: `You need to specify a suggestion to use this command. How will we know what you want to suggest unless you tell us?! If you would like to check the status of your suggestion then you can use \`${config.prefix}statussug [your status message ID]\`.`});
             return;
         }
         let newStatus = 'New Suggestion';
         let author = message.author.id || 'default value';
         let name = message.author.tag;
         let avatar = message.author.displayAvatarURL({ dynamic: true});
-    
-        const initial = new Discord.MessageEmbed()
-        .setColor('FADF2E')
+
+        const initial = new Discord.EmbedBuilder()
+        .setColor(0xFADF2E)
         .setAuthor({name: name, iconURL: avatar})
         .setDescription(messageArgs)
-        .setFooter({text: '📈 This suggestion currently needs votes and feedback. If you would like to discuss it, please visit #discussions and discuss it there.'});
-    
-        message.client.users.cache.get(author).send({text: `Hey, ${message.author.username}! Thanks for submitting a suggestion! Our server needs to have time to vote on this. Once some time has passed, you can check the suggestion channel to check the updated status of your suggestion! We appreciate your feedback! Happy chatting!`});
-    
-        await channel.send(initial).then(function(message) {
+        .setFooter({text: '📈 This suggestion currently needs votes and feedback. If you would like to discuss it, please visit the associated thread.'});
+
+        message.client.users.cache.get(author).send({content: `Hey, ${message.author.username}! Thanks for submitting a suggestion! Our server needs to have time to vote on this. Once some time has passed, you can check the suggestion channel to check the updated status of your suggestion! We appreciate your feedback! Happy chatting!`});
+
+        await channel.send({embeds: [initial]}).then(async (message) => {
             message.react('👍');
             message.react('👎');
             message.startThread({
                 name: messageArgs,
                 autoArchiveDuration: 60,
                 type: 'GUILD_PUBLIC_THREAD'
-            }); 
-        });
-        const suggNo = msg.id;
-    
-        try {
-            (await connection).query(
-                `INSERT INTO Suggs (noSugg, Author, Message, Avatar, stat) VALUES(?, ?, ?, ?, ?)`,
-                [suggNo, author, messageArgs, avatar, newStatus]
-            );
-    
-        } catch(err) {
-            console.log(err);
-        }
-    } else {
-        let messageArgs = '';
-        if (args.length > 0) {
-            messageArgs = args.join(' ');
-        } else {
-            message.react('❓');
-            message.reply({text: 'You need to specify a suggestion to use this command. How will we know what you want to suggest unless you tell us?! If you would like to check the status of your suggestion then you can use \`++statussug [your status message ID]\`.'});
-            return;
-        }
-        let newStatus = 'New Suggestion';
-        let author = message.author.id || 'default value';
-        let name = message.author.tag;
-        let avatar = message.author.displayAvatarURL({ dynamic: true});
-    
-        const initial = new Discord.MessageEmbed()
-        .setColor('#FADF2E')
-        .setAuthor({name: name, iconURL: avatar})
-        .setDescription(messageArgs)
-        .setFooter({text: '📈 This suggestion currently needs votes and feedback. If you would like to discuss it, please visit #discussions and discuss it there.'});
-    
-        await channel.send({ embeds: [initial] }).then(function(message) {
-            message.react('👍');
-            message.react('👎');
-            message.startThread({
-                name: messageArgs,
-                autoArchiveDuration: 60,
-                type: 'GUILD_PUBLIC_THREAD'
-            }); 
+            });
+            try {
+                await connection.query(
+                    `INSERT INTO Suggs (noSugg, Author, Message, Avatar, stat) VALUES(?, ?, ?, ?, ?)`,
+                    [message.id, author, messageArgs, avatar, newStatus]
+                );
+
+            } catch(err) {
+                console.log(err);
+            }
         });
 
-            message.delete();
-        const suggNo = msg.id;
-        
-        message.client.users.cache.get(author).send({text: `Hey, ${message.author.username}! Thanks for submitting a suggestion! Our server needs to have time to vote on this. Once some time has passed, you can check the suggestion channel to check the updated status of your suggestion or use the command \`++status-sugg ${msg.id}\` to check the status of your message.!\n\nWe appreciate your feedback! Happy chatting!`});
+        message.react('✅');
 
-        try {
-            (await connection).query(
-                `INSERT INTO Suggs (noSugg, Author, Message, Avatar, stat) VALUES(?, ?, ?, ?, ?)`,
-                [suggNo, author, messageArgs, avatar, newStatus]
-            );
-    
-        } catch(err) {
-            console.log(err);
-        }
-    }
+
 
 
     }

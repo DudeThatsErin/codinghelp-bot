@@ -1,5 +1,6 @@
 const moment = require('moment');
 const { MessageActionRow, MessageButton } = require('discord.js');
+const config = require('../../config/config.json');
 const filterLevels = {
     DISABLED: 'Off',
     MEMBERS_WITHOUT_ROLES: 'No Role',
@@ -18,9 +19,9 @@ module.exports = {
     name: 'serverinfo',
     description: 'This allows users to find out more information about the server they run this command in.',
     aliases: ['server', 'club', 'serveri', 'server-info'],
-    usage: '++serverinfo',
+    usage: `${config.prefix}serverinfo`,
     inHelp:'yes',
-    example: '++serverinfo',
+    example: `${config.prefix}serverinfo`,
     async execute (message) {
       const row = new MessageActionRow()
       .addComponents(
@@ -50,8 +51,8 @@ module.exports = {
           },
           fields: [
             {
-              name: '**Name & ID:**', 
-              value: `${message.guild.name} - \`${message.guild.id}\``, 
+              name: '**Name & ID:**',
+              value: `${message.guild.name} - \`${message.guild.id}\``,
               inline: true
             },
             {
@@ -59,8 +60,8 @@ module.exports = {
               value: `${owner.user.username} - \`${message.guild.ownerId}\``,
               inline: true
             },
-            { 
-              name: '**Members:**', 
+            {
+              name: '**Members:**',
               value:  `${message.guild.memberCount}`,
               inline: true
             },
@@ -79,39 +80,39 @@ module.exports = {
               value: `${verificationLevels[message.guild.verificationLevel]}`,
               inline: true
             },
-            { 
-              name: '**Boost Count:**', 
-              value: `${message.guild.premiumSubscriptionCount || '0'}`, 
-              inline: true
-            }, 
             {
-              name: '**Time Created:**', 
-              value: `${message.guild.createdAt.toLocaleString()}`, 
+              name: '**Boost Count:**',
+              value: `${message.guild.premiumSubscriptionCount || '0'}`,
               inline: true
             },
             {
-              name: '**Role Count:**', 
-              value: `${roles.length}`, 
+              name: '**Time Created:**',
+              value: `${message.guild.createdAt.toLocaleString()}`,
               inline: true
             },
             {
-              name: '**Emoji Count:**', 
-              value: `${emojis.size}`, 
+              name: '**Role Count:**',
+              value: `${roles.length}`,
               inline: true
             },
             {
-              name: '**Regular Emoji Count:**', 
-              value: `${emojis.filter(emoji => !emoji.animated).size}`, 
+              name: '**Emoji Count:**',
+              value: `${emojis.size}`,
               inline: true
             },
             {
-              name: '**Animated Emoji Count:**', 
-              value: `${emojis.filter(emoji => emoji.animated).size}`, 
+              name: '**Regular Emoji Count:**',
+              value: `${emojis.filter(emoji => !emoji.animated).size}`,
               inline: true
             },
             {
-              name: '**Channels:**', 
-              value: `${channels}`, 
+              name: '**Animated Emoji Count:**',
+              value: `${emojis.filter(emoji => emoji.animated).size}`,
+              inline: true
+            },
+            {
+              name: '**Channels:**',
+              value: `${channels}`,
               inline: true
             }
           ],

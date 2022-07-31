@@ -1,6 +1,4 @@
-const { MessageEmbed } = require("discord.js");
-const config = require('../config/config.json');
-const prefix = config.prefix;
+const { EmbedBuilder } = require("discord.js");
 const ee = require('../config/embed.json');
 const { ButtonPaginator } = require('@psibean/discord.js-pagination');
 
@@ -19,18 +17,26 @@ module.exports = {
 	async execute(interaction, client) {
 		const pages = [];
 		const roleColor =
-			interaction.guild.me.displayHexColor === "#000000"
-				? "#ffffff"
-				: interaction.guild.me.displayHexColor;
+			interaction.guild.me.displayHexColor === "0x000000"
+				? "0xffffff"
+				: interaction.guild.me.displayHexColor; // not sure if this line will work w/v14 colors.
 
-		const description = `These are all of the commands r/CodingHelp can do. If you want to get more information you can do \`/help <command>\`.`;
+		const createCommandHelpEmbed = ({
+			roleColor,
+			title,
+			description = `These are all of the commands r/CodingHelp can do. If you want to get more information you can do \`/help <command>\`.`,
+			fields }) => {
+				return new MessageEmbed()
+					.setColor(roleColor)
+					.setTitle(title)
+					.setDescription(description)
+					.addFields(fields)
+			};
 
-
-		const embed1 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - General Commands')
-			.setDescription(description)
-			.addFields(
+		const embed1 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - General Commands',
+			fields: [
 				{
 					name: 'These are the general commands. By general, we mean commands that are **not** slash commands.',
 					value: '```css\nreport\nuser-info\nserver-info\nflip\nreddit\ntech\ninvite\nping\navatar\n```'
@@ -39,70 +45,75 @@ module.exports = {
 					name: 'These are the commands that have to do with message issues. You can use these commands by replying to someone\'s message as well.',
 					value: '```css\nfaq\nhire\nbin\ndocs\nelaborate\nerror\nformat\njust-ask\npatience\nshare-code\nwiki\nwrong-channel\n```'
 				}
-			);
+			]
+		});
 
-		const embed2 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - Slash Commands')
-			.setDescription(description)
-			.addFields(
+		const embed2 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - Slash Commands',
+			fields: [
 				{
 					name: 'These are all of our slash commands. This means that you type `/` before the command name to access them.',
 					value: '```css\nhelp\n```'
 				}
-			)
+			]
+		});
 
-		const embed3 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - Moderator Only Commands')
-			.setDescription(description)
-			.addFields({
-				name: 'These are general **moderator** only commands. Meaning only **moderators** can use these commands.',
-				value: '```css\nrules\npartner\nserver-status\nsub-status\nbot-status\nsite-status\n```'
-			});
+		const embed3 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - Moderator Only Commands',
+			fields: [
+				{
+					name: 'These are general **moderator** only commands. Meaning only **moderators** can use these commands.',
+					value: '```css\ndm\nrules\npartner\nserver-status\nsub-status\nbot-status\nsite-status\n```'
+				}
+			]
+		});
 
-		const embed4 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - Suggestion System Commands')
-			.setDescription(description)
-			.addFields({
-				name: 'These are commands any user can use for our Suggestions System.',
-				value: '```css\nsuggestions\neditsugg\nstatussugg\n```'
-			}, {
-				name: 'These are our **moderator** only commands for our Suggestions System.',
-				value: '```css\nprog-sugg\ndenied-sugg\ncompletedsugg\n```'
-			});
+		const embed4 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - Suggestion System Commands',
+			fields: [
+				{
+					name: 'These are commands any user can use for our Suggestions System.',
+					value: '```css\nsuggestions\neditsugg\nstatussugg\n```'
+				}, {
+					name: 'These are our **moderator** only commands for our Suggestions System.',
+					value: '```css\nprog-sugg\ndenied-sugg\ncompletedsugg\n```'
+				}
+			]
 
-		const embed5 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - Thanks System Commands')
-			.setDescription(description)
-			.addFields({
-				name: 'These are the commands you can use for our Thanks System. You can use these commands by replying to someone\'s message as well.',
-				value: '```css\nthanks\nunthanks\nthanks-on\nthanks-off\nthanks-leaderboard\n```'
-			});
+		});
 
-		const embed6 = new MessageEmbed()
-			.setColor(roleColor)
-			.setTitle('Help Menu - Challenge System Commands')
-			.setDescription(description)
-			.addFields({
-				name: 'These are commands any user can use for our Challenge System.',
-				value: '```css\nsubmit\nedit-submission\nchallenge-leaderboard\n```'
-			}, {
-				name: 'These are our **moderator** only commands for our Challenge System.',
-				value: '```css\nadd-members\nadd-users\ncheck-participants\nremove-participant\nstart-challenge\nchallenge\nedit-challenge\ncheck-submissions\nreviewed\npurge-submissions\nend-challenge\n```'
-			});
+		const embed5 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - Thanks System Commands',
+			fields: [
+				{
+					name: 'These are the commands you can use for our Thanks System. You can use these commands by replying to someone\'s message as well.',
+					value: '```css\nthanks\nunthanks\nthanks-on\nthanks-off\nthanks-leaderboard\n```'
+				}
+			]
+		})
 
-		pages.push(embed1);
-		pages.push(embed2);
-		pages.push(embed3);
-		pages.push(embed4);
-		pages.push(embed5);
-		pages.push(embed6);
+		const embed6 = createCommandHelpEmbed({
+			roleColor,
+			title: 'Help Menu - Challenge System Commands',
+			fields: [
+				{
+					name: 'These are commands any user can use for our Challenge System.',
+					value: '```css\nsubmit\nedit-submission\nchallenge-leaderboard\n```'
+				}, {
+					name: 'These are our **moderator** only commands for our Challenge System.',
+					value: '```css\nadd-members\nadd-users\ncheck-participants\nremove-participant\nstart-challenge\nchallenge\nedit-challenge\ncheck-submissions\nreviewed\npurge-submissions\nend-challenge\n```'
+				}
+			]
+		});
+
+		pages.push([embed1, embed2, embed3, embed4, embed5, embed6]);
 
 		let cmdd = interaction.options.getString('commandname');
-		//console.log(cmdd)
+		//console.log('cmdd',cmdd)
 
 		if (cmdd) { //WORKS
 
@@ -110,34 +121,34 @@ module.exports = {
 			//console.log(cmd)
 			if (!cmd) return interaction.editReply({ content: "That command could not be found!", ephemeral: true });
 
-			const emb = new MessageEmbed()
+			const emb = new EmbedBuilder()
 				.setColor(roleColor)
 				.setTitle(`Help for \`${cmd.name}\``);
 			if (cmd.description) {
-				emb.setDescription(cmd.description, true);
+				emb.setDescription(cmd.description);
 			} else {
 				emb.setDescription("No description could be found");
 			}
 			if (cmd.note) {
-				emb.addField("Note:", cmd.note, false)
+				emb.addFields({name: "Note:", value: cmd.note})
 			}
 			if (Array.isArray(cmd.aliases) && cmd.aliases.length > 0) {
-				emb.addField("Aliases", cmd.aliases.join(", "), false);
+				emb.addFields({name: "Aliases", value: cmd.aliases.join(", ")});
 			}
 			if (cmd.cooldown) {
-				emb.addField("You need to wait this long between usages of this command:", `${cmd.cooldown} seconds`, false)
+				emb.addFields({name:"You need to wait this long between usages of this command:", value: `${cmd.cooldown} seconds`})
 			}
 			if (cmd.usage) {
-				emb.addField("Usage", cmd.usage, false);
+				emb.addFields({name: "Usage", value: cmd.usage});
 			}
 			if (cmd.example) {
-				emb.addField("Example Usage", cmd.example, false)
+				emb.addFields({name: "Example Usage", value: cmd.example})
 			}
 			if (cmd.ownerOnly) {
-				emb.addField("THIS IS ONLY A COMMAND ERIN CAN USE. Right?", cmd.ownerOnly, false)
+				emb.addFields({name: "THIS IS ONLY A COMMAND ERIN CAN USE. Right?", value: cmd.ownerOnly})
 			}
 			if (Array.isArray(cmd.userPerms) && cmd.userPerms.length > 0) {
-				emb.addField("You must have these permissions to run this command:", cmd.userPerms.join(", "), false)
+				emb.addFields({name: "You must have these permissions to run this command:", value: cmd.userPerms.join(", ")})
 			}
 			emb.setFooter({ text: ee.footertext, iconURL: ee.footericon });
 			//console.log(emb.toJSON());
@@ -148,8 +159,10 @@ module.exports = {
 			interaction.editReply({ embeds: [emb], ephemeral: true })
 
 		} else {
-			const buttonPaginator = new ButtonPaginator(interaction, { pages });
-			await buttonPaginator.send();
+			//  const buttonPaginator = new ButtonPaginator(interaction, { pages });
+			//  await buttonPaginator.send();
+
+			message.reply({ content: `The commands are listed on our website. Check this link: https://codinghelp.site/r-CodingHelp-Bot-s-Commands-b0c601c559a14d5d936426c98b51193d`})
 		}
 
 	},

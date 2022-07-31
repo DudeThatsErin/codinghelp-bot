@@ -1,16 +1,14 @@
 const Discord = require('discord.js');
 const connection = require('../../database.js');
-
+const config = require('../../config/config.json');
 
 module.exports = {
     name: 'reviewed',
     description: 'This gives **mods** the ability to review submissions.',
     aliases: ['mark', 'review'],
-    usage: '++reviewed [challenge number] <number of points> [message ID]',
-    example: '++reviewed 1 1 841143871689064448',
-    inHelp: 'yes',
-    modOnly: 'yes',
-    challengeMods: 'yes',
+    usage: `${config.prefix}reviewed [challenge number] <number of points> [message ID]`,
+    example: `${config.prefix}reviewed 1 1 841143871689064448`,
+    challengeMods: 1,
     async execute (message, args) {
                 let challengeNo = args[0];
                 let points = args[1];
@@ -19,17 +17,17 @@ module.exports = {
 
             if (!challengeNo) {
                 message.react('❌');
-                    message.channel.send('You need to tell me what challenge number you would like to review.');
+                    message.channel.send({content:'You need to tell me what challenge number you would like to review.'});
                     return;
                 } else {
                     if (!points) {
                         message.react('❓');
-                        message.channel.send('You need to tell me how many points to give the original author of this submission.');
+                        message.channel.send({content:'You need to tell me how many points to give the original author of this submission.'});
                         return;
                     } else {
                         if (!msgId) {
                             message.react('❓');
-                            message.channel.send('You need to include the message ID for the submission you would like to review. Without this I will not know which message to review.');
+                            message.channel.send({content:'You need to include the message ID for the submission you would like to review. Without this I will not know which message to review.'});
                             return;
                         } else {
                             connection.query(

@@ -1,12 +1,12 @@
 const connection = require('../../database.js');
+const config = require('../../config/config.json');
 
 module.exports = {
   name: 'thanks',
   aliases: ['thnks', 'tks', 'tx', 'thank'],
-  usage: '++thanks <@username or ID>',
-  inHelp: 'yes',
+  usage: `${config.prefix}thanks <@username or ID>`,
   cooldown: 400,
-  example: '++thanks @DudeThatsErin#8061 or ++thanks 455926927371534346',
+  example: `${config.prefix}thanks @DudeThatsErin#8061 or ${config.prefix}thanks 455926927371534346`,
   async execute(message, args, client) {
 
     if (message.reference === null) { // just a regular message
@@ -36,7 +36,7 @@ module.exports = {
     );
     const no = results[0][0].total;
 
-    message.reply({ content: `You thanked ${mention.username}! They now have ${no} thanks. Use the \`++thanks-leaderboard\` command to see where you stand.`});
+    message.reply({ content: `You thanked ${mention.username}! They now have ${no} thanks. Use the \`${config.prefix}thanks-leaderboard\` command to see where you stand.`});
     } else {
       const mention = message.mentions.repliedUser;
       const thankee = mention.id;
@@ -58,7 +58,7 @@ module.exports = {
       );
       const no = results[0][0].total;
   
-      message.reply({ content: `You thanked them! They now have ${no} thanks. Use the \`++thanks-leaderboard\` command to see where you stand.`});
+      message.reply({ content: `You thanked them! They now have ${no} thanks. Use the \`${config.prefix}thanks-leaderboard\` command to see where you stand.`});
     }
 
   }
