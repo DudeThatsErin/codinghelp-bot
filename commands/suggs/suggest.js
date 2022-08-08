@@ -11,7 +11,7 @@ module.exports = {
     async execute(message, args){
     const threadAuthor = message.member.displayName;
 
-    const channel = message.guild.channels.cache.find(c => c.id === `1000437492467650650`); //actual ch: 1000437492467650650 // test ch: 1000420829307338862
+    const channel = message.guild.channels.cache.find(c => c.id === `433877613128450061`); //actual ch: 433877613128450061 // test ch: 1000420829307338862
     //console.log(channel)
 
 
