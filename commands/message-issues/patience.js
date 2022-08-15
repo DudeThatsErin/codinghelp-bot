@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('../../config/config.json');
 
 module.exports = {
@@ -8,15 +8,15 @@ module.exports = {
 	usage: `${config.prefix}patience <@username or ID>`,
 	example: `${config.prefix}patience @DudeThatsErin#8736`,
 	execute(message, args) {
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Our Website')
-        .setStyle('LINK')
+        .setStyle('Link')
         .setURL('https://codinghelp.site'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Our Subreddit')
-        .setStyle('LINK')
+        .setStyle('Link')
         .setURL('https://reddit.com/r/CodingHelp')
     );
 

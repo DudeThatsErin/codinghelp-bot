@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('../../config/config.json');
 
 module.exports = {
@@ -8,19 +8,19 @@ module.exports = {
 	usage: `${config.prefix}poorly-phrased <@username or ID>`,
 	example: `${config.prefix}poorly-phrased @DudeThatsErin or ${config.prefix}pp @DudeThatsErin`,
 	execute(message, args) {
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
     .addComponents(
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('What have you tried?')
-        .setStyle('LINK')
+        .setStyle('Link')
         .setURL('https://mattgemmell.com/what-have-you-tried/'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('How to ask a question?')
-        .setStyle('LINK')
+        .setStyle('Link')
         .setURL('https://en.wikipedia.org/wiki/Wikipedia:Reference_desk/How_to_ask_a_software_question'),
-      new MessageButton()
+      new ButtonBuilder()
         .setLabel('Writing the Perfect Question')
-        .setStyle('LINK')
+        .setStyle('Link')
         .setURL('https://blogs.msmvps.com/jonskeet/2010/08/29/writing-the-perfect-question/')
     );
 

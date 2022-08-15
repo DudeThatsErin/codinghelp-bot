@@ -129,11 +129,11 @@ module.exports = {
                 .addComponents(
                     new Discord.ButtonBuilder()
                         .setLabel('Erin\'s Support Server')
-                        .setStyle('Link')
+                        .setStyle(5)
                         .setURL('https://discord.gg/tT3VEW8AYF'),
                     new Discord.ButtonBuilder()
                         .setLabel('Fill out this form!')
-                        .setStyle('Link')
+                        .setStyle(5)
                         .setURL('https://dudethatserin.com')
                 )
             const embed = {

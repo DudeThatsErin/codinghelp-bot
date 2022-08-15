@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('../../config/config.json');
 module.exports = {
   name: 'format',
@@ -7,19 +7,19 @@ module.exports = {
   usage: `${config.prefix}format @username or user ID`,
   example: `${config.prefix}format @DudeThatsErin`,
   execute(message, args) {
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
       .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Website')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://codinghelp.site'),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Subreddit')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://reddit.com/r/CodingHelp'),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Need more help learning to format your code?')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://www.writebots.com/discord-text-formatting/')
       );
     if (message.reference === null) { // just a regular message

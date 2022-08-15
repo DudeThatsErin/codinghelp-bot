@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const rulesLink = 'https://codinghelp.site/Rules-for-Participating-on-r-CodingHelp-cb011ca7106148af9fb9ba64b295c969';
 const config = require('../../config/config.json');
 const color = 0x1a1a1a;
@@ -94,15 +94,15 @@ module.exports = {
   execute(message, args) {
     const rules = [rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8]; // Keeps all of the rules inside an array.
 
-    const buttons = new MessageActionRow()
+    const buttons = new ActionRowBuilder()
       .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('All our Rules')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL(rulesLink),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Knowledgebase')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://codinghelp.site')
 
       );

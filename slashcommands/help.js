@@ -43,7 +43,7 @@ module.exports = {
 				},
 				{
 					name: 'These are the commands that have to do with message issues. You can use these commands by replying to someone\'s message as well.',
-					value: '```css\nfaq\nhire\nbin\ndocs\nelaborate\nerror\nformat\njust-ask\npatience\nshare-code\nwiki\nwrong-channel\n```'
+					value: '```css\nfaq\ntry\nhire\nbin\ndocs\nelaborate\nerror\nformat\njust-ask\npatience\nshare-code\nwiki\nwrong-channel\n```'
 				}
 			]
 		});

@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('../../config/config.json');
 
 module.exports = {
@@ -7,15 +7,15 @@ module.exports = {
   aliases: ['question', 'frequent', 'q'],
   usage: `${config.prefix}faq @username or user ID`,
   execute(message, args) {
-    const row = new MessageActionRow()
+    const row = new ActionRowBuilder()
       .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Website')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://codinghelp.site'),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Subreddit')
-          .setStyle('LINK')
+          .setStyle('Link')
           .setURL('https://reddit.com/r/CodingHelp')
       );
 

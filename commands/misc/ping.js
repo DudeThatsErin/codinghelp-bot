@@ -15,7 +15,7 @@ module.exports = {
         let seconds = Math.floor(message.client.uptime / 1000) % 60;
 
         let embed = {
-          color: '#ffffff',
+          color: 0xffffff,
           title: `${bot.name} is online!`,
           url: bot.url,
           thumbnail: {
