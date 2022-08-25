@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const config = require('../../config/config.json');
 const filterLevels = {
     DISABLED: 'Off',
@@ -23,17 +23,17 @@ module.exports = {
     inHelp:'yes',
     example: `${config.prefix}serverinfo`,
     async execute (message) {
-      const row = new MessageActionRow()
+      const row = new ActionRowBuilder()
       .addComponents(
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Website')
           .setStyle('LINK')
           .setURL('https://codinghelp.site'),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Subreddit')
           .setStyle('LINK')
           .setURL('https://reddit.com/r/CodingHelp'),
-        new MessageButton()
+        new ButtonBuilder()
           .setLabel('Our Discord')
           .setStyle('LINK')
           .setURL('https://discord.gg/geQEUBm')

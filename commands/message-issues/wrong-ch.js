@@ -16,14 +16,11 @@ module.exports = {
       }
       else {
         let usr = message.mentions.members.first();
-        usr.send({ content: `Hey, ${usr}!\n\nThis isn\'t the correct channel for your question. Please check our channel list on the left and ask repost in a different channel. Thank you!` });
+        message.channel.send({ content: `Hey, ${usr}! This isn\'t the correct channel for your question. Please check our <#1006278480968810516> on the left and ask repost in a different channel. Thank you!` });
       }
-      message.channel.send({ content: `📨 Hey, ${user} I just sent you a DM as your post is in the wrong channel! Please check it!` });
     } else {
       const user = message.mentions.repliedUser;
-      usr.send({content: `Hey, ${usr}!\n\nThis isn\'t the correct channel for your question. Please check our channel list on the left and ask repost in a different channel. Thank you!`});
-
-      message.channel.send({ content: `📨 Hey, ${user.username} I just sent you a DM as your post is in the wrong channel! Please check it!` });
+      message.channel.send({content: `Hey, ${user}! This isn\'t the correct channel for your question. Please check our <#1006278480968810516> on the left and ask repost in a different channel. Thank you!`});
     }
   }
 };

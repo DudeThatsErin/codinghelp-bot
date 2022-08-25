@@ -16,17 +16,14 @@ module.exports = {
 	inHelp: 'yes',
 	async execute(interaction, client) {
 		const pages = [];
-		const roleColor =
-			interaction.guild.me.displayHexColor === "0x000000"
-				? "0xffffff"
-				: interaction.guild.me.displayHexColor; // not sure if this line will work w/v14 colors.
+		const roleColor = 0x008080;
 
 		const createCommandHelpEmbed = ({
 			roleColor,
 			title,
 			description = `These are all of the commands r/CodingHelp can do. If you want to get more information you can do \`/help <command>\`.`,
 			fields }) => {
-				return new MessageEmbed()
+				return new EmbedBuilder()
 					.setColor(roleColor)
 					.setTitle(title)
 					.setDescription(description)
@@ -162,7 +159,7 @@ module.exports = {
 			//  const buttonPaginator = new ButtonPaginator(interaction, { pages });
 			//  await buttonPaginator.send();
 
-			message.reply({ content: `The commands are listed on our website. Check this link: https://codinghelp.site/r-CodingHelp-Bot-s-Commands-b0c601c559a14d5d936426c98b51193d`})
+			interaction.editReply({ content: `The commands are listed on our website. Check this link: https://codinghelp.site/r-CodingHelp-Bot-s-Commands-b0c601c559a14d5d936426c98b51193d`})
 		}
 
 	},

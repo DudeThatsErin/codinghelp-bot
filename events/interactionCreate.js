@@ -23,8 +23,8 @@ module.exports = {
             await client.slashCommands.get(interaction.commandName).execute(interaction, client);
         } catch (error) {
             console.error(error);
-            const embed = new Discord.MessageEmbed()
-                .setColor(ee.bad_color)
+            const embed = new Discord.EmbedBuilder()
+                .setColor(0x000000)
                 .setTitle('Oh no! An _error_ has appeared!')
                 .setDescription(`**Contact Bot Owner:** <@${o.id}>`)
                 .addFields({
