@@ -13,8 +13,6 @@ module.exports = {
         // delete slash commands
         //message.guild.commands.set([])
         //console.log(await message.guild.commands.fetch());
-        client.cooldowns = new Discord.Collection();
-        const { cooldowns } = client;
 
         if (message.author.bot) {
             //console.log('bot message');
@@ -32,7 +30,7 @@ module.exports = {
 
         // owner only
         if (command.ownerOnly === 1) {
-            if (!message.author.id === me.id) {
+            if (message.author.id != me.id) {
                 return message.reply({ content: `This is only a command Erin (<@${me.id}>) can use. If you are seeing this in error use the \`${config.prefix}report\` command.` });
             }
         }
@@ -100,12 +98,12 @@ module.exports = {
         }
 
         // command cooldowns
-        if (!cooldowns.has(command.name)) {
-            cooldowns.set(command.name, new Discord.Collection());
+        if (!client.cooldowns.has(command.name)) {
+            client.cooldowns.set(command.name, new Discord.Collection());
         }
 
         const now = Date.now();
-        const timestamps = cooldowns.get(command.name);
+        const timestamps = client.cooldowns.get(command.name);
         const cooldownAmount = (command.cooldown || 1) * 1000;
 
         if (timestamps.has(message.author.id)) {

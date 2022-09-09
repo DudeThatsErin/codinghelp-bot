@@ -15,7 +15,7 @@ module.exports = {
         console.log('          Error Logs...             ')
         console.log('|-----------------------------------|')
 
-        client.user.setPresence({ activities: [{ name: 'Use ++ prefix' }] });
+        client.user.setPresence({ activities: [{ name: 'Use + prefix' }] });
 
         const rest = new REST({ version: '9' }).setToken(config.token);
 
@@ -24,9 +24,14 @@ module.exports = {
                 console.log('Started refreshing application (/) commands.');
 
                 await rest.put(
-                    Routes.applicationCommands(bot.id),
+                    Routes.applicationCommands(bot.id, bot.testServerId),
                     { body: client.slashCommands },
                 );
+
+                // await rest.put(
+                //     Routes.applicationCommands(bot.id, bot.testServerId),
+                //     { body: client.erinCommands },
+                // );
 
                 console.log('Successfully reloaded application (/) commands.');
             } catch (error) {
