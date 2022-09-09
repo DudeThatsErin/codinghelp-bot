@@ -1,7 +1,7 @@
 {
   "tag": "r/CodingHelp#6894",
 	"name": "r/CodingHelp",
-	"id": "739190110402379876",
+	"id": "911475091584458783",
 	"server": "https://discord.gg/geQEUBm/",
 	"avatar": "https://codinghelp.site/bots/codinghelp.png",
 	"github": "https://github.com/dudethatserin/codinghelp-bot/",
@@ -15,7 +15,9 @@
 	"reportsChId": "989519826521313307",
 	"channelGuideId": "808548019041468416",
 	"announcementsId": "359760352470368281",
+	"testannouncementsId": "1014995248163852298",
 	"suggestionsId": "433877613128450061",
+	"testsuggestionsId": "1010302476580298867",
 	"challengesId": "8127675970439086480",
 	"chLeaderboardId": "812767941791580201",
 	"commandsId": "433962402292432896"
