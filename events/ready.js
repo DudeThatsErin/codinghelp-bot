@@ -28,10 +28,10 @@ module.exports = {
                     { body: client.slashCommands },
                 );
 
-                // await rest.put(
-                //     Routes.applicationCommands(bot.id, bot.testServerId),
-                //     { body: client.erinCommands },
-                // );
+                await rest.put(
+                    Routes.applicationCommands(bot.id, bot.testServerId),
+                    { body: client.erinCommands },
+                );
 
                 console.log('Successfully reloaded application (/) commands.');
             } catch (error) {
