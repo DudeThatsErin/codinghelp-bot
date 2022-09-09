@@ -105,7 +105,11 @@ module.exports = {
                 (await client.users.cache.get(OGauthor)).send({ embeds: [updated] });
             interaction.reply({content: `The suggestion has been updated in the channel and the message was sent. 😃`});
 
+<<<<<<< HEAD
             const chnnel = client.channels.cache.find(c => c.id === bot.suggestionsId);
+=======
+            const chnnel = client.channels.cache.find(c => c.id === bot.testsuggestionsId);
+>>>>>>> 8904eebb4aa153a655241ba87e308244a84d243e
             chnnel.messages.fetch(msgId).then(message => {
                 if (message) message.edit({ embeds: [inprogress] });
                     if(message) message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));

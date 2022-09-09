@@ -113,7 +113,11 @@ module.exports = {
                     }
         
     
+<<<<<<< HEAD
                     const chnnel = await client.channels.cache.find(c => c.id === bot.suggestionsId);
+=======
+                    const chnnel = await client.channels.cache.find(c => c.id === bot.testsuggestionsId);
+>>>>>>> 8904eebb4aa153a655241ba87e308244a84d243e
                     chnnel.messages.fetch(msgId).then(message => {
                         message.delete(); 
                     });
