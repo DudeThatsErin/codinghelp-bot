@@ -82,10 +82,17 @@ console.log('     Loading Erin Slash Commands...  ')
 console.log('|-----------------------------------|')
 
 const commandFilePaths2 = readFilesFromPath('./my-server-only');
+<<<<<<< HEAD
 
 commandFilePaths2.forEach((filePath) => {
   const cmd = require(filePath);
 
+=======
+
+commandFilePaths2.forEach((filePath) => {
+  const cmd = require(filePath);
+
+>>>>>>> 45200756a0b1d743a3afbea2fa7edf6f94f6d635
   let object = {};
   if (cmd.name) { object.name = cmd.name; }
   if (cmd.description) { object.description = cmd.description; }
@@ -93,8 +100,13 @@ commandFilePaths2.forEach((filePath) => {
 
   data.push(object);
   //client.erinCommands.delete(cmd.name, cmd);
+<<<<<<< HEAD
   client.slashCommands.set(cmd.name, cmd);
   // CHANGE THIS TO erinCommands ON PRODUCTION BOT.
+=======
+  client.erinCommands.set(cmd.name, cmd);
+  // CHANGE THIS TO slashCommands ON TEST BOT.
+>>>>>>> 45200756a0b1d743a3afbea2fa7edf6f94f6d635
   console.log(cmd.name + ' loaded successfully!');
 });
 
