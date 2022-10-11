@@ -28,7 +28,7 @@ module.exports = {
                 { body: message.client.erinCommands },
             );
 
-            message.reply('deleted client.erinCommands')
+          message.reply('deleted client.erinCommands');
 
         } catch (error) {
             console.error(error);
