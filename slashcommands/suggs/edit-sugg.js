@@ -83,11 +83,8 @@ module.exports = {
             .setDescription(upStatus)
             .setFooter({text:'If you are interested in submitting a suggestion please use: h!suggestion'});
 
-<<<<<<< HEAD
+
             const channel = client.channels.cache.find(c => c.id === bot.suggestionsId);
-=======
-            const channel = client.channels.cache.find(c => c.id === bot.testsuggestionsId);
->>>>>>> 8904eebb4aa153a655241ba87e308244a84d243e
             channel.messages.fetch(mId).then(message => {
                 message.edit({ embeds: [editedTwo] });
                 }

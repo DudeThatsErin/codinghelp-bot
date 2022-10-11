@@ -16,14 +16,7 @@ module.exports = {
         }
     ],
     async execute(interaction){
-
-<<<<<<< HEAD
-    const channel = interaction.guild.channels.cache.find(c => c.id === bot.suggestionsId);
-=======
-    const channel = interaction.guild.channels.cache.find(c => c.id === bot.testsuggestionsId);
->>>>>>> 8904eebb4aa153a655241ba87e308244a84d243e
-
-
+        const channel = interaction.guild.channels.cache.find(c => c.id === bot.suggestionsId); //test-2 channel ID 1029428940705632326 OR bot.suggestionsId
         let messageArgs = interaction.options.getString('message');
         let newStatus = 'New Suggestion';
         let author = interaction.user.id || 'default value';

@@ -63,7 +63,7 @@ module.exports = {
 			fields: [
 				{
 					name: 'These are the informative commands. By informative, we mean commands that provide some kind of information whether it be a link or general information.',
-					value: '```css\nfreelance\ncareer\nw3schools\nd.js\nd.py\webassembly\nreactiflux\nddev\neditors\ndom-listening\ndjslangfirst\nsmallhosting\nlargehosting\nnojquery\n```'
+					value: '```css\nfreelance\ncareer\nw3schools\nd.js\nd.py\webassembly\nreactiflux\nerror\nddev\neditors\ndom-listening\ndjslangfirst\nsmallhosting\nlargehosting\nnojquery\n```'
 				},
 			]
 		});

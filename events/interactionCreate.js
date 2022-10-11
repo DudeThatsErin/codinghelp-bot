@@ -6,8 +6,8 @@ module.exports = {
     async execute(interaction, client) {
         if (interaction.isMessageComponent()) return;
 
-        const command = client.slashCommands.get(interaction.commandName);
-        if (!command) return interaction.editReply({ content: 'This command no longer exists.', ephemeral: true });
+        const command = client.slashCommands.get(interaction.commandName) || client.erinCommands.get(interaction.commandName);
+        if (!command) return interaction.reply({ content: 'This command no longer exists.', ephemeral: true });
 
         // owner only
         if (command.ownerOnly === 1) {
@@ -62,7 +62,12 @@ module.exports = {
         // actually running the commands.
         try {
             //await interaction.deferReply();
-            await client.slashCommands.get(interaction.commandName).execute(interaction, client);
+            if(`718253204147798047` === interaction.guild.id) {
+                await client.erinCommands.get(interaction.commandName).execute(interaction, client);
+            }
+            if(`359760149683896320` === interaction.guild.id) {
+                await client.slashCommands.get(interaction.commandName).execute(interaction, client);
+            }
         } catch (error) {
             console.error(error);
             const embed = new Discord.EmbedBuilder()
@@ -83,7 +88,7 @@ module.exports = {
                 })
                 .setTimestamp()
                 .setFooter({ text: `Thanks for using ${client.user.tag}! I'm sorry you encountered this error!`, icon_url: `${client.user.displayAvatarURL()}` });
-            interaction.reply({ content: `Hey, <@${o.id}>! You have an error!`, embeds: [embed] });
+            interaction.editReply({ content: `Hey, <@${o.id}>! You have an error!`, embeds: [embed] });
         }
 
     }

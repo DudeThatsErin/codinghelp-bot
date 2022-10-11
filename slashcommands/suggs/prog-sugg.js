@@ -57,16 +57,10 @@ module.exports = {
             const mod = interaction.user.id;
             const stats = interaction.options.getString('message');
 
-            try {
                 connection.query(
                     `UPDATE Suggs SET stat = ?, Moderator = ? WHERE noSugg = ?;`,
                     [stats, mod, msgId],
                 );
-            } catch (error) {
-                interaction.reply({content: 'There was an error updating the suggestion in the database. Please report this!'});
-                console.log(error);
-                return;
-            }
 
             const result8 = await connection.query(
                 `SELECT stat FROM Suggs WHERE noSugg = ?;`,
@@ -97,7 +91,7 @@ module.exports = {
                 .setDescription(suggestion)
                 .addFields(
                     [{ name: 'Your suggestion has been updated! This is the current status:', value: upStatus},
-                    { name: 'Moderator that updated your suggestion:', value: moder},]
+                    { name: 'Moderator that updated your suggestion:', value: moderate},]
                 )
                 .setTimestamp()
                 .setFooter({text: 'If you don\'t understand this status, please contact the moderator that updated your suggestion. Thank you!'});
@@ -105,11 +99,7 @@ module.exports = {
                 (await client.users.cache.get(OGauthor)).send({ embeds: [updated] });
             interaction.reply({content: `The suggestion has been updated in the channel and the message was sent. 😃`});
 
-<<<<<<< HEAD
             const chnnel = client.channels.cache.find(c => c.id === bot.suggestionsId);
-=======
-            const chnnel = client.channels.cache.find(c => c.id === bot.testsuggestionsId);
->>>>>>> 8904eebb4aa153a655241ba87e308244a84d243e
             chnnel.messages.fetch(msgId).then(message => {
                 if (message) message.edit({ embeds: [inprogress] });
                     if(message) message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));

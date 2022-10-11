@@ -3,7 +3,7 @@ const connection = require('../../database.js');
 module.exports = {
   name: 'thanks',
   usage: `/thanks <@username or ID>`,
-  cooldown: 400,
+  //cooldown: 400,
   example: `/thanks @DudeThatsErin#8061`,
   options: [
     {
