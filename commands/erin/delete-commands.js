@@ -16,16 +16,16 @@ module.exports = {
 
           //console.log('client ', message.client.slashCommands)
 
-            // await rest.delete(
-            //     Routes.applicationGuildCommands(bot.id, bot.serverId),
-            //     { body: message.client.slashCommands },
-            // );
+            await rest.put(
+                Routes.applicationGuildCommands(bot.id, bot.serverId),
+                { body: [] },
+            );
 
-            // message.reply('deleted client.slashCommands')
+            message.reply('deleted client.slashCommands')
 
-            await rest.delete(
+            await rest.put(
                 Routes.applicationGuildCommands(bot.id, bot.testServerId),
-                { body: message.client.erinCommands },
+                { body: [] },
             );
 
           message.reply('deleted client.erinCommands');

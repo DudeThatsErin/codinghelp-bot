@@ -41,7 +41,8 @@ module.exports = {
             [msgId],
         );
         const OGauthor = result2[0][0].Author;
-        const aut = OGauthor.tag;
+        const aut = await interaction.guild.members.fetch(OGauthor);
+        const name = aut.user.username;
 
         const result3 = await connection.query(
             `SELECT Message from Suggs WHERE noSugg = ?;`,
@@ -77,10 +78,10 @@ module.exports = {
         
         const denied = new Discord.EmbedBuilder()
             .setColor(0xA4503E)
-            .setAuthor({ name: aut, iconURL: avatar})
+            .setAuthor({ name: name, iconURL: avatar})
             .setDescription(suggestion)
             .addFields(
-                [{ name: 'Unfortunately, your suggestion was denied. This is the reason:', value: upStatus},
+                [{ name: 'Unfortunately, your suggestion was denied. This is the reason:', value: stats},
                 { name: 'Moderator that denied your suggestion:', value: moderate},]
             )
             .setTimestamp()

@@ -88,7 +88,7 @@ module.exports = {
                 })
                 .setTimestamp()
                 .setFooter({ text: `Thanks for using ${client.user.tag}! I'm sorry you encountered this error!`, icon_url: `${client.user.displayAvatarURL()}` });
-            interaction.editReply({ content: `Hey, <@${o.id}>! You have an error!`, embeds: [embed] });
+            interaction.reply({ content: `Hey, <@${o.id}>! You have an error!`, embeds: [embed] });
         }
 
     }

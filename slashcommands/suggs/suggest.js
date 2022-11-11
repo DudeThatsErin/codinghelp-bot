@@ -35,7 +35,7 @@ module.exports = {
             message.react('👍');
             message.react('👎');
             message.startThread({
-                name: messageArgs,
+                name: `${name} made a suggestion`,
                 autoArchiveDuration: 60,
                 type: 'GUILD_PUBLIC_THREAD'
             });

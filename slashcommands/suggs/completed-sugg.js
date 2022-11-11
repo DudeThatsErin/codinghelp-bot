@@ -41,7 +41,8 @@ module.exports = {
                         [msgId],
                     );
                     const OGauthor = result2[0][0].Author;
-                const aut = (await interaction.client.users.cache.get(`${OGauthor}`)).tag;
+                    const aut = await interaction.guild.members.fetch(OGauthor);
+                    const name = aut.user.username;
 
                     const result3 = await connection.query(
                         `SELECT Message from Suggs WHERE noSugg = ?;`,
@@ -88,7 +89,7 @@ module.exports = {
             
                 const denied = new Discord.EmbedBuilder()
                     .setColor(0x6E3EA4)
-                    .setAuthor({name: aut, iconURL:avatar})
+                    .setAuthor({name: name, iconURL:avatar})
                     .setDescription(suggestion)
                     .addFields(
                         [{ name: 'Your suggestion was completed! This is the decision:', value: upStatus},
