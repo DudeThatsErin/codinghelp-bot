@@ -5,7 +5,7 @@ const token = require('../../config/config.json').token;
 
 module.exports = {
   name: 'deletecommands',
-  aliases: ['endlash', 'delete-commands'],
+  aliases: ['endslash', 'delete-commands'],
   description: 'Allows Erin to delete the Slash Commands.',
   ownerOnly: 1,
   execute(message) {

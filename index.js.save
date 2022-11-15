@@ -1,6 +1,6 @@
-/*
+	/*
   r/CodingHelp
-  USING DISCORD.JS V14.6.0
+/root/codinghelp-bot/index.js/root/codinghelp-bot/README.md/Documents/index.js  USING DISCORD.JS V14.6.0
 */
 const fs = require('fs');
 const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');

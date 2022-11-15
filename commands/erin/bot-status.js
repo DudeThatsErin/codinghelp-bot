@@ -11,7 +11,7 @@ module.exports = {
     modOnly: 1,
     async execute(message, args, client) {
 
-        const channel = client.channels.cache.find(channel => channel.id === bot.announcementsId);
+        const channel = client.channels.cache.find(channel => channel.id === bot.announcementsId); // '1029428940705632326'
         const reason = args.slice(0).join(" ");
         if (!reason) return message.reply({content:'Mods, you forgot to include a status message. SMH'});
 
