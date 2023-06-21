@@ -5,7 +5,7 @@
 This is a bot that I created and decided to make it open-source. I get assistance from my awesome discord server when it comes to updates and fixing bugs.
 
 ## Current To Do List
-- Update pagination to v14 when dev finishes updating it.
+N/A.
 
 
 ## Contributions
